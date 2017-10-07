@@ -1,0 +1,41 @@
+
+<div ng-hide="currentUser.username === 'Alexandros'">
+
+    <br /><br /><br /><br /><br /><p>Δεν έχετε πρόσβαση σε αυτήν την σελίδα</p>
+
+</div>
+
+<!-- Body -->
+<div ng-show="currentUser.username === 'Alexandros'" class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <h1>Χρήστες</h1>
+
+            <input ng-model="categoryToBeAdded" type="text" class="form-control" placeholder="Add Category">
+            <input ng-click="addCategory()" type="button" value="Add Category" class="btn btn-default" />
+            <br /><br />
+            <input ng-model="searchUser" type="text" class="form-control" placeholder="Search User">
+
+            <div infinite-scroll="increaseLimit()">
+
+                <div ng-repeat="user in users | filter:{username: searchUser} | orderBy: 'username' | limitTo: userLimit">
+
+                    <h4>Username</h4>
+                    <p>{{($index + 1) + ". " + user.username}}</p>
+                    <h4>Image</h4>
+                    <p><img ng-src="{{user.md5_hash}}" class="nav-pic" width="80" height="80"/></p>
+
+
+                    <input ng-click="changeUserImage(user.$id)" type="button" value="Άλλαξε την εικόνα του" class="btn btn-default" />
+
+                    <br /><br />
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

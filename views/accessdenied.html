@@ -1,0 +1,59 @@
+
+<div ng-hide="currentUser.username === 'Alexandros'">
+
+    <br /><br /><br /><br /><br /><p>Δεν έχετε πρόσβαση σε αυτήν την σελίδα</p>
+
+</div>
+
+<!-- Body -->
+<div ng-show="currentUser.username === 'Alexandros'" class="container">
+<div class="row">
+<div class="col-md-8">
+
+    <h1>Latest Posts</h1>
+
+    <div infinite-scroll="increaseLimit()">
+
+        <article ng-repeat="post in posts | filter:{ access: searchByAccess } | orderBy: '-date' | limitTo: articleLimit">
+            <h2><a href="#/posts/access/tonpoulo/denied/{{post.$id}}">{{decodeElement(post.title)}}</a></h2>
+
+            <div class="row">
+                <div class="group1 col-sm-6 col-md-6">
+                    <span title="Κατηγορία" class="glyphicon glyphicon-folder-open"></span> &nbsp;<a>{{post.category}}</a>
+                    &nbsp;&nbsp;<span title="Ετικέτες" class="glyphicon glyphicon-bookmark"></span> <a>{{post.tag}}</a>
+                </div>
+                <div class="group2 col-sm-6 col-md-6">
+                    <span class="glyphicon glyphicon-pencil"></span> <a href="#/posts/access/tonpoulo/denied/{{post.$id}}">{{post.comments_number}} Comments</a>
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> {{viewDate(post.date)}}
+                </div>
+            </div>
+
+            <hr>
+
+            <a href="#/posts/access/tonpoulo/denied/{{post.$id}}"><img ng-src="{{post.imageURL}}" class="img-responsive"></a>
+
+            <br />
+
+            <p class="lead">{{decodeElement(post.firstText)}}</p>
+
+
+            <p class="text-right">
+                <a href="#/posts/access/tonpoulo/denied/{{post.$id}}">
+                    continue reading...
+                </a>
+            </p>
+
+            <h4>Posted by user <a>{{post.username}}&nbsp;&nbsp;<img ng-src="{{post.userImage}}" class="nav-pic" width="30" height="30"/></a></h4>
+
+        </article>
+    </div>
+
+</div>
+<div class="col-md-4">
+
+
+
+</div>
+</div>
+</div>
+

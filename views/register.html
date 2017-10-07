@@ -1,0 +1,29 @@
+<div class="auth-forms">
+
+    <h2>Register</h2>
+
+    <form ng-submit="register(form.username.$error)" name="form">
+        <div ng-show="error || form.username.$error">
+            <p ng-show="error" class="text-danger">{{error | errorMessageFilter}}</p>
+            <p ng-show="form.username.$error.taken" class="text-danger">Username is already taken.</p>
+            <p ng-show="form.username.$error.invalid" class="text-danger">Username contains invalid characters.</p>
+        </div>
+        <input type="email" ng-model="user.email" placeholder="Email" class="form-control" required><br>
+        <input type="text" ng-model="user.username" placeholder="Username" name="username" check-username class="form-control" required><br>
+        <input type="password" ng-model="user.password" placeholder="Password" class="form-control" required><br>
+        <label class="col-md-2">DRAGME</label>
+        <div class="row text-center">
+            <div id="dragDiv">
+                <ul class="draglist">
+                    <li class="dragLi" ng-repeat="obj in draggableObjects" ng-drop="true" ng-drop-success="onDropComplete($index, $data,$event)">
+                        <div class="dragObject" ng-drag="true" ng-drag-data="obj" draggable="false">
+                            {{obj.name}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <input ng-hide="form.username.$error.taken || form.username.$error.invalid" type="submit" value="Register" class="btn btn-primary" />
+    </form>
+
+</div>

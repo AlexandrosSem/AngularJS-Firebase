@@ -1,0 +1,48 @@
+<div ng-hide="currentUser.username === 'Alexandros'">
+
+    <br /><br /><br /><br /><br /><p>Δεν έχετε πρόσβαση σε αυτήν την σελίδα</p>
+
+</div>
+
+
+
+<!-- Body -->
+<div ng-show="currentUser.username === 'Alexandros'" class="container">
+
+    <div class="well">
+        <h4>Τα σχόλια</h4>
+
+        <div infinite-scroll="increaseLimit()">
+
+            <div ng-repeat="comment in comments | filter:{access: searchByAccess}:true | orderBy: '-date' | limitTo: commentLimit">
+
+                <ul id="comments" class="comments">
+                    <li class="comment clearfix">
+                        <div class="clearfix">
+                            <h4 class="pull-left"><img ng-src="{{comment.userImage}}" class="nav-pic" width="80" height="80"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>{{comment.username}}</a></h4>
+                            <p class="pull-right">{{viewDate(comment.date)}}</p>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <form ng-submit="saveComment(comment)" role="form" class="clearfix">
+                    <div class="col-md-12 form-group">
+                        <label class="sr-only">Comment</label>
+                        <textarea ng-model="comment.comment" class="form-control" id="comment" placeholder="Comment" required></textarea>
+                    </div>
+                    <div class="col-md-12 form-group text-right">
+                        <button type="submit" class="btn btn-primary">Αποδοχή</button>
+                        <input ng-click="deleteComment(comment.$id)" type="button" value="Διαγραφή" class="btn btn-default" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+
+
+</div>

@@ -1,0 +1,43 @@
+
+<div ng-hide="currentUser.username === 'Alexandros'">
+
+    <br /><br /><br /><br /><br /><p>Δεν έχετε πρόσβαση σε αυτήν την σελίδα</p>
+
+</div>
+
+<!-- Body -->
+<div ng-show="currentUser.username === 'Alexandros'" class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <h1>Τα email σας</h1>
+
+            <div infinite-scroll="increaseLimit()">
+
+                <div ng-repeat="email in emails | orderBy: '-date' | limitTo: emailLimit">
+
+                    <h4>date</h4>
+                    <p>{{viewDate(email.date)}}</p>
+                    <h4>name</h4>
+                    <p>{{decodeElement(email.name)}}</p>
+                    <h4>email</h4>
+                    <p>{{decodeElement(email.email)}}</p>
+                    <h4>subject</h4>
+                    <p>{{decodeElement(email.subject)}}</p>
+                    <h4>message</h4>
+                    <p class="lead">{{decodeElement(email.message)}}</p>
+
+                    <h4>Written by user <a><img ng-src="{{email.userImage}}" class="nav-pic" width="80" height="80"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{email.username}}</a></h4>
+
+                    <input ng-click="deleteEmail(email.$id)" type="button" value="Διαγραφή" class="btn btn-default" />
+
+                    <br /><br />
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,98 @@
+<!-- Body -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <article>
+                <br /><br />
+                <iframe ng-src="{{trustSrc(fbLikeURL)}}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>
+                <h2><a>{{decodeElement(post.title)}}</a></h2>
+
+                <div class="row">
+                    <div class="group1 col-sm-6 col-md-6">
+                        <span title="Κατηγορία άρθρου" class="glyphicon glyphicon-folder-open"></span> &nbsp;<a>{{post.category}}</a>
+                        &nbsp;&nbsp;<span title="Ετικέτες άρθρου" class="glyphicon glyphicon-bookmark"></span> <a>{{post.tag}}</a>
+                    </div>
+                    <div class="group2 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-pencil"></span> <a>{{post.comments_number}} Comments</a>
+                        &nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> {{viewDate(post.date)}}
+                    </div>
+                </div>
+
+                <hr>
+
+                <img ng-src="{{post.imageURL}}" width="900" height="300" class="img-responsive">
+
+                <br />
+
+                <p class="lead">{{decodeElement(post.firstText)}}</p>
+
+                <p id="HTMLToDOM"></p>
+
+                <h4>Posted by user <a>{{post.username}}&nbsp;&nbsp;<img ng-src="{{post.userImage}}" class="nav-pic" width="30" height="30"/></a></h4>
+
+            </article>
+
+
+
+            <ul class="pager">
+                <li class="previous"><a href="#/">&larr; Back to posts</a></li>
+            </ul>
+
+            <!-- Comment form -->
+
+
+            <div ng-hide="signedIn()">
+
+                <p>Παρακαλώ κάντε <a href="#/login">είσοδο</a> για να μπορέσετε να γράψετε σχόλια!</p>
+
+            </div>
+
+            <div ng-show="signedIn()" class="well">
+                <h4>Leave a comment</h4>
+                <form ng-submit="createComment()" role="form" class="clearfix">
+                    <div class="col-md-12 form-group">
+                        <label class="sr-only">Comment</label>
+                        <textarea ng-model="comment" class="form-control" id="comment" placeholder="Comment" required></textarea>
+                    </div>
+                    <div class="col-md-12 form-group text-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <hr />
+
+            <ul id="comments" class="comments">
+
+                <div infinite-scroll="increaseLimit()">
+
+                    <li ng-repeat="comment in comments | filter:{access: searchByAccess, postId: articleId}:true | orderBy: '-date' | limitTo: commentLimit" class="comment clearfix">
+                        <div class="clearfix">
+                            <h4 class="pull-left"><img ng-src="{{comment.userImage}}" class="nav-pic" width="80" height="80"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>{{comment.username}}</a></h4>
+                            <p class="pull-right">{{viewDate(comment.date)}}</p>
+                        </div>
+                        <p>
+                            <em>{{decodeElement(comment.comment)}}</em>
+                        </p>
+                    </li>
+                </div>
+            </ul>
+        </div>
+        <div class="col-md-4">
+
+
+            <!-- Recent Comments -->
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Recent Comments</h4>
+                </div>
+                <ul class="list-group">
+                    <li ng-repeat="comment in comments | filter:{access: searchByAccess, postId: articleId}:true | orderBy: '-date' | limitTo: 10" class="list-group-item">{{decodeElement(comment.comment)}} --- <a><em>{{comment.username}}</em></a></li>
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

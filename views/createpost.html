@@ -1,0 +1,92 @@
+<div ng-hide="signedIn()">
+
+    <p>Παρακαλώ κάντε <a href="#/login">είσοδο</a> για να μπορέσετε να ποστάρετε άρθρα!</p>
+
+</div>
+
+
+<div ng-show="signedIn()">
+
+
+    <form ng-submit="createArticle()">
+
+        <h1>Δημιουργία του άρθρου</h1>
+
+        <div class="form-group">
+            <label for="titleText">Δώστε τίτλο στο άρθρο!</label>
+            <input ng-model="title" id="titleText" class="form-control" type="text" placeholder="Τίτλος του άρθρου..." maxlength="80" required> </input>
+        </div>
+
+        <div class="form-group">
+            <label for="urlText">Δώστε link εικόνας για το άρθρο για παράδειγμα από google!</label>
+            <input ng-model="imageURL" id="urlText" class="form-control" type="url" placeholder="Link εικόνας..." maxlength="500" required> </input>
+        </div>
+
+        <div class="form-group">
+            <label for="categoryArticle">Επιλέξτε την κατηγορία στην οποία θα ανήκει το άρθρο!</label>
+            <select ng-model="category" id="categoryArticle" class="form-control" required>
+                <option value=""></option>
+                <option ng-repeat="category in categories | orderBy: 'category'" value="{{category.category}}">{{category.category}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="tagArticle">Επιλέξτε μία η περισσότερες (με πατημένο το ctrl) ετικέτες για το άρθρο!</label>
+            <select ng-model="tag" id="tagArticle" class="form-control" name="tags" multiple required>
+                <option ng-repeat="tag in tagsList | orderBy: 'tag'" value="{{tag.tag}}">{{tag.tag}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="addTagArticle">Αν δεν βρίσκετε τις ετικέτες που θέλετε προσθέστε τις απο εδώ και μετά επιλέξτε τις από την λίστα!</label>
+            <input ng-model="addedTags" id="addTagArticle" class="form-control" type="text" placeholder="ΠΧ ΔΙΑΣΤΗΜΑ,ΦΥΣΙΚΗ10,PLANET_MARS" maxlength="40"> </input>
+            <input ng-click="addTags()" type="button" value="Προσθέστε τις ετικέτες στην λίστα!" class="btn btn-default" />
+        </div>
+
+        <div class="form-group">
+            <label for="firstTextArticle">Γράψτε την πρώτη παράγραφο του άρθρου!</label>
+            <textarea ng-model="firstText" id="firstTextArticle" class="form-control" rows="10" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="textArticle">Γράψτε το υπόλοιπο άρθρο!</label>
+            <textarea id="textArticle" name="textArticle" class="form-control" rows="10"></textarea>
+        </div>
+
+
+
+        <h1>Προεπισκόπηση του άρθρου</h1>
+
+        <article>
+            <h2><a>{{title}}</a></h2>
+
+            <div class="row">
+                <div class="group1 col-sm-6 col-md-6">
+                    <span title="Κατηγορία άρθρου" class="glyphicon glyphicon-folder-open"></span> &nbsp;<a>{{category}}</a>
+                    &nbsp;&nbsp;<span title="Ετικέτες άρθρου" class="glyphicon glyphicon-bookmark"></span> <a ng-repeat="t in tag | TagFilter">{{t}}</a>
+                </div>
+                <div class="group2 col-sm-6 col-md-6">
+                    <span class="glyphicon glyphicon-pencil"></span> <a>0 Comments</a>
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> {{viewDate()}}
+                </div>
+            </div>
+
+            <hr>
+
+            <img ng-src="{{imageURL}}" width="900" height="300" class="img-responsive">
+
+            <br />
+
+            <p class="lead">{{firstText}}</p>
+
+            <p id="HTMLToDOM"></p>
+
+        </article>
+
+
+        <input type="submit" value="Δημιουργία του άρθρου" class="btn btn-primary" />
+
+    </form>
+
+
+</div>

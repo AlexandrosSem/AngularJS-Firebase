@@ -1,0 +1,100 @@
+
+
+
+<!-- Body -->
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+
+    <h1>{{mainPageTitle}}</h1>
+
+    <iframe ng-src="{{trustSrc(fbLikeURL)}}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>
+
+    <div infinite-scroll="increaseLimit()">
+
+        <article ng-repeat="post in posts | filter:{ access: searchByAccess, tag: searchByTag, title: fields.searchBySearch} | filter:{access: searchByAccess, category:  searchByCategory}:categoryComparator | filter:{access: searchByAccess, username:  searchByUsername}:usernameComparator | orderBy: '-date' | limitTo: articleLimit">
+            <h2><a href="#/{{post.$id}}">{{decodeElement(post.title)}}</a></h2>
+
+            <div class="row">
+                <div class="group1 col-sm-6 col-md-6">
+                    <span title="Κατηγορία" class="glyphicon glyphicon-folder-open"></span> &nbsp;<a ng-click="changeCategory(post.category)">{{post.category}}</a>
+                    &nbsp;&nbsp;<span title="Ετικέτες" class="glyphicon glyphicon-bookmark"></span>&nbsp;<a ng-repeat="t in post.tag | MainPageTagFilter" ng-click="changeTag(t)">{{t + " "}}</a>
+                </div>
+                <div class="group2 col-sm-6 col-md-6">
+                    <span class="glyphicon glyphicon-pencil"></span> <a href="#/{{post.$id}}">{{post.comments_number}} Comments</a>
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> {{viewDate(post.date)}}
+                </div>
+            </div>
+
+            <hr>
+
+            <a href="#/{{post.$id}}"><img ng-src="{{post.imageURL}}" class="img-responsive"></a>
+
+            <br />
+
+            <p class="lead">{{decodeElement(post.firstText)}}</p>
+
+            <p class="text-right">
+                <a href="#/{{post.$id}}">
+                    continue reading...
+                </a>
+            </p>
+
+            <h4>Posted by user <a ng-click="changeUsername(post.username)">{{post.username}}&nbsp;&nbsp;<img ng-src="{{post.userImage}}" class="nav-pic" width="30" height="30"/></a></h4>
+
+        </article>
+    </div>
+
+
+</div>
+<div class="col-md-4">
+
+
+    <!-- Latest Posts -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Latest Articles</h4>
+        </div>
+        <ul class="list-group">
+            <li ng-repeat="post in posts | filter:{ access: searchByAccess } | orderBy: '-date' | limitTo: 10" class="list-group-item"><a href="#/{{post.$id}}">{{($index + 1) + ". " + decodeElement(post.title)}}</a></li>
+        </ul>
+    </div>
+
+    <!-- Categories -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Categories</h4>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><a ng-click="changeAll()">All_CATEGORIES</a></li>
+            <li ng-repeat="category in categories | orderBy: 'category'" class="list-group-item"><a ng-click="changeCategory(category.category)">{{category.category}}</a></li>
+        </ul>
+    </div>
+
+    <!-- Tags -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Tags</h4>
+        </div>
+        <div class="panel-body">
+            <ul class="list-inline">
+                <li><a ng-click="changeAll()">All_TAGS</a></li>
+                <li ng-repeat="tag in tags | orderBy: 'tag'"><a ng-click="changeTag(tag.tag)">{{tag.tag}}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Recent Comments -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Recent Comments</h4>
+        </div>
+        <ul class="list-group">
+            <li ng-repeat="comment in comments | filter:{access: searchByAccess}:true | orderBy: '-date' | limitTo: 10" class="list-group-item"><a href="#/{{comment.postId}}">{{decodeElement(comment.comment)}} --- <em>{{comment.username}}</em></a></li>
+        </ul>
+    </div>
+
+</div>
+</div>
+</div>
+

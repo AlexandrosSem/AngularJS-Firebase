@@ -1,0 +1,39 @@
+
+<div ng-hide="signedIn()">
+
+    <br /><br /><br /><p>Δεν έχετε πρόσβαση σε αυτήν την σελίδα</p>
+
+</div>
+
+
+<!-- Body -->
+<div ng-show="signedIn()" class="container">
+    <h1>{{currentUser.username}}</h1>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-3">
+            <img class="img-thumbnail img-responsive photo" ng-src="{{imageURL}}" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <p>
+                Δώστε το link μιας φωτογραφίας σας οπως για παράδειγμα facebook,twitter η μιας άλλης εικόνας ώστε να αντιπροσωπεύεστε στο ιστολόγιο.
+            </p>
+
+            <p>
+                Give the link of your photo for example from facebook, twitter or another photo to represent you in this blog.
+            </p>
+
+            <p>
+            <form ng-submit="saveImage()">
+                <div class="form-group">
+                    <label for="urlText">Δώστε link εικόνας για την φωτογραφία σας στο site</label>
+                    <input ng-model="imageURL" id="urlText" class="form-control" type="url" placeholder="Link της εικόνας σας..." maxlength="500" required>
+                    <input type="submit" value="Σώστε την φωτογραφία σας" class="btn btn-primary" />
+                </div>
+            </form>
+            </p>
+        </div>
+    </div>
+
+    <br />
+</div>
